@@ -1,0 +1,47 @@
+package com.wipro.service;
+
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+
+import com.wipro.dto.DepartmentDto;
+import com.wipro.dto.EmployeeDto;
+import com.wipro.entity.Employee;
+import com.wipro.repository.EmployeeRepository;
+
+@Service
+public class EmployeeServiceImpl implements EmployeeService {
+
+	@Autowired
+	private EmployeeRepository empRepo;
+	
+	@Autowired
+	private ModelMapper mapper;
+	
+	@Autowired
+	private RestTemplate restTemplate;
+	
+	@Override
+	public EmployeeDto saveEmployee(EmployeeDto Dto) {
+		// TODO Auto-generated method stub
+		Employee employee = mapper.map(Dto, Employee.class);
+		Employee savedEmployee = empRepo.save(employee);
+		return mapper.map(savedEmployee, EmployeeDto.class);
+	}
+
+	public EmployeeDto getEmployeeById(Long id) {
+		// TODO Auto-generated method stub
+		Employee existingEmployee = empRepo.findById(id).get();
+		
+		ResponseEntity<DepartmentDto> responseEntity = restTemplate.getForEntity("https://localhost:8080/departments/"+ existingEmployee.getDeptCode(), DepartmentDto.class);
+		
+		DepartmentDto departmentDto = responseEntity.getBody();
+		
+		EmployeeDto employeeDto =  mapper.map(existingEmployee, EmployeeDto.class);
+		
+		
+	}
+
+}

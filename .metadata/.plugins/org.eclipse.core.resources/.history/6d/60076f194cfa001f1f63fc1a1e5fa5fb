@@ -1,0 +1,46 @@
+package com.wipro.service;
+
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+
+import com.wipro.dto.DepartmentDto;
+
+//@FeignClient(url = "http://localhost:8080", value = "department-service")
+@FeignClient(name = "department-service")
+
+public interface APIClient {
+
+	
+	@GetMapping("/departments/{deptCode}")
+	public DepartmentDto getDepartmentByCode(@PathVariable("deptCode") String deptCode);
+	
+}
+
+//package com.wipro.service;
+//
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
+//import org.springframework.cloud.openfeign.FeignClient;
+//import org.springframework.web.bind.annotation.GetMapping;
+//import org.springframework.web.bind.annotation.PathVariable;
+//
+//import com.wipro.dto.DepartmentDto;
+//
+//import brave.Tracing;
+//
+////@FeignClient(url = "http://localhost:8080", value = "department-service")
+//@FeignClient(name = "department-service")
+//
+//public interface APIClient {
+//	
+//	Logger logger = LoggerFactory.getLogger(APIClient.class);
+//	
+//	@GetMapping("/departments/{deptCode}")
+//	public default DepartmentDto getDepartmentByCode(@PathVariable("deptCode") String deptCode)
+//	{
+//		String traceId = Tracing.current().currentTraceContext().get().traceIdString();
+//        logger.info("TRACE ID: " + traceId);  // ✅ Log Trace ID to ensure tracing is working
+//        return null; // This should be handled by Feign Client implementation
+//	}
+//}

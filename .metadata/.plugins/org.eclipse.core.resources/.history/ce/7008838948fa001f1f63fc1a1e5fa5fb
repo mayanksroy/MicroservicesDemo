@@ -1,0 +1,35 @@
+package com.wipro.service;
+
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.wipro.dto.OrganizationDto;
+import com.wipro.entity.Organization;
+import com.wipro.repository.OrganizationRepository;
+
+@Service
+public class OrganizationServiceImpl implements OrganizationService {
+	
+	@Autowired
+	private OrganizationRepository deptRepo;
+	
+	@Autowired
+	private ModelMapper mapper;
+
+	@Override
+	public OrganizationDto saveDepartment(OrganizationDto dto) {
+		// TODO Auto-generated method stub
+		Organization organization = mapper.map(dto, Organization.class);
+		Organization savedDepartment = deptRepo.save(organization);
+		return mapper.map(savedDepartment, OrganizationDto.class);
+	}
+
+	@Override
+	public OrganizationDto getDepartmentByCode(String deptCode) {
+		// TODO Auto-generated method stub
+		Organization existingDepartment = deptRepo.findByDeptCode(deptCode);
+		return mapper.map(existingDepartment, OrganizationDto.class);
+	}
+
+}

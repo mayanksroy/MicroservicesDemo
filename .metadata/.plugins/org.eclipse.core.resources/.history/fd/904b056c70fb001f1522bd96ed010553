@@ -1,0 +1,36 @@
+
+#version: '3.8'
+
+services:
+  mysqldb:
+    image: mysql
+    container_name: mysqldb
+#    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: product_db
+      MYSQL_USER: ms
+      MYSQL_PASSWORD: ms
+#    ports:
+#      - "3306:3306"
+    networks:
+      - sbmysqlnet
+
+  sbmysqldockerdemo:
+    build: .
+    container_name: sbmysqldockerdemo
+#    restart: always
+    depends_on:
+      - mysqldb
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysqldb/product_db
+      SPRING_DATASOURCE_USERNAME: ms
+      SPRING_DATASOURCE_PASSWORD: ms
+    ports:
+      - "8081:8080"
+    networks:
+      - sbmysqlnet
+
+networks:
+  sbmysqlnet:
+    driver: bridge

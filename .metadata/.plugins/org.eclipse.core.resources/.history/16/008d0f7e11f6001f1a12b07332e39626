@@ -1,0 +1,11 @@
+package com.wipro.dto;
+
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
+@Getter @Setter @NoArgsConstructor @AllArgsConstructor
+public class APIResponseDto {
+	
+	private EmployeeDto employeeDto;
+	private DepartmentDto departmentDto;
+}

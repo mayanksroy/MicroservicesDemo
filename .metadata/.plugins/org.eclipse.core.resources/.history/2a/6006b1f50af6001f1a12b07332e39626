@@ -1,0 +1,11 @@
+package com.wipro.service;
+
+import com.wipro.dto.EmployeeDto;
+
+public interface EmployeeService {
+
+	EmployeeDto saveEmployee(EmployeeDto employeeDto);
+
+	EmployeeDto getEmployeeById(String id);
+
+}

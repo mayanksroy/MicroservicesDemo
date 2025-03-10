@@ -1,0 +1,5 @@
+FROM eclipse-temurin:19
+LABEL maintainer="mayank@wipro.com"
+WORKDIR /app
+COPY target/springboot-docker.jar /app/springboot-docker-demo.jar
+ENTRYPOINT ["java","-jar","springboot-docker-demo.jar"]

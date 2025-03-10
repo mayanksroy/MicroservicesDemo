@@ -1,0 +1,11 @@
+package com.wipro.service;
+
+import com.wipro.dto.OrganizationDto;
+
+public interface DepartmentService {
+
+	OrganizationDto saveDepartment(OrganizationDto dto);
+
+	OrganizationDto getDepartmentByCode(String deptCode);
+
+}

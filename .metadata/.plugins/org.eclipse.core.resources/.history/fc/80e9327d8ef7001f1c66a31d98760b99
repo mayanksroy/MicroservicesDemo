@@ -1,0 +1,42 @@
+server.port=9090
+spring.application.name=api-gateway
+
+## Employee Service Route
+#spring.cloud.gateway.routes[0].id=employee-service
+#spring.cloud.gateway.routes[0].uri=lb://EMPLOYEE-SERVICE
+#spring.cloud.gateway.routes[0].predicates[0]=Path=/api/employees/**
+#spring.cloud.gateway.routes[0].filters[0]=RewritePath=/api/employees/(?<path>.*), /$\\{path}
+#spring.cloud.gateway.routes[0].filters[0].args.redis-rate-limiter.replenishRate=10
+#spring.cloud.gateway.routes[0].filters[0].args.redis-rate-limiter.burstCapacity=20
+#
+## Department Service Route
+#spring.cloud.gateway.routes[1].id=department-service
+#spring.cloud.gateway.routes[1].uri=lb://DEPARTMENT-SERVICE
+#spring.cloud.gateway.routes[1].predicates[0]=Path=/api/departments/**
+#spring.cloud.gateway.routes[1].filters[0]=RewritePath=/api/departments/(?<path>.*), /$\\{path}
+#spring.cloud.gateway.routes[1].filters[0].args.redis-rate-limiter.replenishRate=10
+#spring.cloud.gateway.routes[1].filters[0].args.redis-rate-limiter.burstCapacity=20
+
+# Direct routing without service discovery
+spring.cloud.gateway.routes[0].id=employee-service
+spring.cloud.gateway.routes[0].uri=http://localhost:8081
+spring.cloud.gateway.routes[0].predicates[0]=Path=/api/employees/**
+
+spring.cloud.gateway.routes[1].id=department-service
+spring.cloud.gateway.routes[1].uri=http://localhost:8080
+spring.cloud.gateway.routes[1].predicates[0]=Path=/api/departments/**
+
+# Eureka Configuration
+eureka.client.register-with-eureka=true
+eureka.client.fetch-registry=true
+#eureka.client.service-url.defaultZone=http://localhost:8761/eureka/
+eureka.client.service-url.defaultZone=http://127.0.0.1:8761/eureka/
+eureka.instance.prefer-ip-address=true
+# Enable health check
+eureka.client.healthcheck.enabled=true
+#eureka.client.registry-fetch-interval-seconds=5
+#eureka.client.eureka-server-connect-timeout-seconds=30
+#eureka.client.eureka-server-read-timeout-seconds=30
+#
+#logging.level.com.netflix.eureka=DEBUG
+#logging.level.com.netflix.discovery=DEBUG

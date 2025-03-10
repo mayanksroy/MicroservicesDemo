@@ -1,0 +1,21 @@
+package com.wipro.service;
+
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+
+import com.wipro.dto.DepartmentDto;
+
+//@FeignClient(url = "http://localhost:8080", value = "department-service")
+//@FeignClient(name = "department-service")
+@FeignClient(name = "api-gateway")
+
+public interface APIClient {
+
+	@GetMapping("/departments/{deptCode}")
+	public DepartmentDto getDepartmentByCode(@PathVariable("deptCode") String deptCode);
+	
+	@GetMapping("/organizations/{orgCode}")
+	public DepartmentDto getOrganizationByCode(@PathVariable("orgCode") String orgCode);
+	
+}

@@ -1,0 +1,20 @@
+server.port=8080
+spring.application.name=api-gateway
+
+# Employee Service Route
+spring.cloud.gateway.routes[0].id=employee-service
+spring.cloud.gateway.routes[0].uri=lb://EMPLOYEE-SERVICE
+spring.cloud.gateway.routes[0].predicates[0]=Path=/api/employees/**
+spring.cloud.gateway.routes[0].filters[0]=RewritePath=/api/employees/(?<path>.*), /$\\{path}
+
+# Department Service Route
+spring.cloud.gateway.routes[1].id=department-service
+spring.cloud.gateway.routes[1].uri=lb://DEPARTMENT-SERVICE
+spring.cloud.gateway.routes[1].predicates[0]=Path=/api/departments/**
+spring.cloud.gateway.routes[1].filters[0]=RewritePath=/api/departments/(?<path>.*), /$\\{path}
+
+# Eureka Configuration
+eureka.client.register-with-eureka=true
+eureka.client.fetch-registry=true
+eureka.client.service-url.defaultZone=http://localhost:8761/eureka/
+eureka.instance.prefer-ip-address=true
